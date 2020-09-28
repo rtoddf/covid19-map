@@ -5,24 +5,23 @@ import Legend from './Legend';
 import LoadCountriesTask from '../Tasks/LoadCountriesTask';
 
 const Covid19 = () => {
-  const [countries, setCountries] = useState(["canada"]);
+  const [countries, setCountries] = useState([]);
 
   // const legendItemsReverse = [...legendItems].reverse();
 
   const load = () => {
-    console.log("load");
     const loadCountriesTask = new LoadCountriesTask();
-    loadCountriesTask.load(setCountries);
+    loadCountriesTask.load((countries) => setCountries(countries));
   };
 
   useEffect(load, []);
 
-  console.log("countries: ", countries)
+  // console.log("countries: ", countries)
 
   return (
     <div>
 
-      {countries.length === 0 ? <Loading /> : <div><CovidMap /><Legend /></div>}
+      {countries.length === 0 ? <Loading /> : <div><CovidMap countries={countries} /><Legend /></div>}
     
     </div>
   );

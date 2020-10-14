@@ -15,10 +15,10 @@ const CovidMap = ({countries}) => {
   // takes two params - feature and layer
   const onEachCountry = (country, layer) => {
     layer.options.fillColor = country.properties.color;
+
     const name = country.properties.ADMIN;
-
     const confirmedText = country.properties.confirmedText;
-
+    
     layer.bindPopup(`${name} ${confirmedText}`)
   }
 

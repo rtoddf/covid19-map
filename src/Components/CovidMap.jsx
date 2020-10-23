@@ -2,7 +2,7 @@ import React from 'react';
 import { Map, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './CovidMap.css';
-import { Layer } from 'leaflet';
+// import { Layer } from 'leaflet';
 
 const CovidMap = ({countries}) => {
   const mapStyles = {

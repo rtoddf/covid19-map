@@ -1,7 +1,8 @@
 import { features } from '../data/countries.json';
 import papa from 'papaparse';
-import { fireEvent } from '@testing-library/react';
-import { map } from 'leaflet';
+// import { fireEvent } from '@testing-library/react';
+// import { map } from 'leaflet';
+import legendItems from '../entities/LegendItems';
 
 class LoadCountriesTask {
   // hacky proxy fix again
@@ -27,8 +28,6 @@ class LoadCountriesTask {
   #processCovidData = (covidCountries) => {
     for(let i=0; i < this.mapCountries.length; i++){
       const mapCountry = this.mapCountries[i];
-      
-
       const covidCountry = covidCountries.find((covidCountry) => covidCountry.ISO3 === mapCountry.properties.ISO_A3);
 
       mapCountry.properties.confirmed = 0;
@@ -39,9 +38,21 @@ class LoadCountriesTask {
         mapCountry.properties.confirmed = confirmed;
         mapCountry.properties.confirmedText = this.#formatNumberWithCommas(confirmed);
       }
+
+      this.#setCountryColor(mapCountry);
     }
 
     this.setState(this.mapCountries);
+  }
+
+  #setCountryColor = (mapCountry) => {
+    const legendItem = legendItems.find((legendItem) => 
+      legendItem.isFor(mapCountry.properties.confirmed)
+    );
+
+    if(legendItem !== undefined){
+      mapCountry.properties.color = legendItem.color;
+    }
   }
 
   #formatNumberWithCommas = function (number)  {
